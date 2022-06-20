@@ -37,6 +37,7 @@ jobs:
        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
  
      - name: Install dependencies
+       uses: actions/checkout@v1
        run: Ddev composer install
  
      - name: Generate key
