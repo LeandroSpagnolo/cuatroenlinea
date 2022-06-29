@@ -26,6 +26,4 @@ jobs:
         php artisan key:generate
  
     - name: Run Tests
-      run: |
-        ddev ssh
-        php artisan test
+      run: vendor/bin/phpunit tests/
