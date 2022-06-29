@@ -8,39 +8,22 @@ on:
  pull_request:
  
 jobs:
- tests:
-   runs-on: ubuntu-latest
-   strategy:
-     matrix:
-       php: [7.3, 7.4]
+  phpunit:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+      with:
+        fetch-depth: 1
  
-   name: Test - PHP ${{ matrix.php }}
+    - name: Install composer dependencies
+      run: |
+        composer install --no-scripts
  
-   steps:
-     - name: Checkout code
-       uses: actions/checkout@v2
+    - name: Prepare Laravel Application
+      run: |
+        cp .env.example .env
+        php artisan key:generate
  
-     - name: Cache PHP dependencies
-       uses: actions/cache@v1
-       with:
-         path: vendor
-         key: dependencies-php-${{ matrix.php }}-composer-${{ hashFiles('**/composer.lock') }}
- 
-     - name: Setup PHP
-       uses: shivammathur/setup-php@v2
-       with:
-         php-version: ${{ matrix.php }}
-         extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, gd
-         coverage: none
- 
-     - name: Copy ENV Laravel Configuration for CI
-       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
- 
-     - name: Install dependencies
-       run: ddev composer install
- 
-     - name: Generate key
-       run: php artisan key:generate
- 
-     - name: Execute tests
-       run: php artisan test  
+    - name: Run Tests
+      run: vendor/bin/phpunit tests/
