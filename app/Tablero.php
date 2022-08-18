@@ -25,12 +25,14 @@ class Tablero implements interfazTablero
 
 
     public function __construct (int $dim_x = 7, int $dim_y = 6) {
-        if(dim_x <= 3 && dim_y <= 3){
-            throw new Exception("El tablero debe ser de al menos 3 por 3");
+        if(dim_x <= 4 && dim_y <= 4){
+            throw new Exception("El tablero debe ser de al menos 4 por 4");
         }
 
         $this->dimX = $dim_x;
         $this->dimY = $dim_y;
+
+        $this->limpiarTablero();
     }
     
     public function dimensionTableroX(){
