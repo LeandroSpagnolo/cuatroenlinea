@@ -9,7 +9,7 @@ interface interfazTablero{
     public function dimensionTableroX() : int; // dimension del tablero en el eje X
     public function dimensionTableroY() : int; // dimension del tablero en el eje Y
     public function limpiarTablero();//Vuelve al tablero en su estado original sin fichas
-    public function ponerFicha(int $x, int $y, Ficha $ficha);//Pone una ficha arriba de la ficha de mas altura en y
+    public function ingresoUsuarioFicha(int $x,Ficha $ficha);//Pone una ficha arriba de la ficha de mas altura en y
     public function sacarFicha(int $x, int $y); //Se fija cual es la ficha de mas altura en el eje y, y la saca
     public function hayFicha(int $x, int $y); //devuelve True o False dependiendo si hay una ficha en la posicion
     public function devolverValorCasilla(int $x,int $y);//devuelve el valor de la casilla dada
@@ -53,7 +53,7 @@ class Tablero implements interfazTablero
     } 
     
 
-    public function ponerFicha(int $x, int $y, Ficha $ficha){
+    protected function ponerFicha(int $x, int $y, Ficha $ficha){
 
         if($x > $this->dimensionTableroX() || $y > $this->dimensionTableroY()){
             throw new Exception("ingrese valores de posicion dentro del rango del tablero");
@@ -62,6 +62,8 @@ class Tablero implements interfazTablero
         $this->tablero[$x][$y] = $ficha;
     }
 
+
+    //No se si hace falta una funcion para sacar fichas
     public function sacarFicha(int $x, int $y){
 
         if($x > $this->dimensionTableroX() || $y > $this->dimensionTableroY()){
@@ -69,6 +71,23 @@ class Tablero implements interfazTablero
         }
 
         $this->tablero[$x][$y] = "0";
+    }
+
+    public function ingresoUsuarioFicha(int $x,Ficha $ficha){
+
+        if(hayFicha($x,dimensionTableroY())){
+            throw new Exception("La columna esta llena");
+        }
+        
+        for($y = dimensionTableroY(); $y > 0; $y--){
+            if(hayFicha($x,$y) != TRUE){
+                ponerFicha($x,$y,$ficha)
+
+                //No se porq php no reconoce el break
+                break 0;
+            }
+        }
+
     }
 
     
