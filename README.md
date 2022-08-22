@@ -64,10 +64,6 @@ Creamos la clave de aplicacion para nuestro proyecto:
 ### 5- Correr aplicación
 Una vez que ya completamos todos los pasos de arriba hacemos:
 
-> ``exit``
-
-para poder salir del servidor local, luego reiniciamos el proyecto con:
-
 > ``ddev restart``
 
 Una vez hecho eso, en la consola nos va a dar la direccion en la cual esta alojada nuestra pagina web, para entrar solo le agregariamos /jugar/1 a la direccion y deberiamos estar en el juego
