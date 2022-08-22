@@ -9,8 +9,9 @@ interface interfazTablero{
     public function dimensionTableroX() : int; // dimension del tablero en el eje X
     public function dimensionTableroY() : int; // dimension del tablero en el eje Y
     public function limpiarTablero();//Vuelve al tablero en su estado original sin fichas
-    public function ingresoUsuarioFicha(int $x,Ficha $ficha);//Pone una ficha arriba de la ficha de mas altura en y
-    public function sacarFichaUsuario(int $x); //Se fija cual es la ficha de mas altura en el eje y, y la saca
+    public function ponerFicha(int $x, int $y, Ficha $ficha);//Pone una ficha arriba de la ficha de mas altura en y
+    public function sacarFicha(int $x, int $y); //Se fija cual es la ficha de mas altura en el eje y, y la saca
+    public function hayFicha(int $x, int $y); //devuelve True o False dependiendo si hay una ficha en la posicion
     public function devolverValorCasilla(int $x,int $y);//devuelve el valor de la casilla dada
 }
 
@@ -32,6 +33,7 @@ class Tablero implements interfazTablero
         $this->dimY = $dim_y;
 
         $this->limpiarTablero();
+
     }
     
     public function dimensionTableroX() : int{
@@ -52,7 +54,7 @@ class Tablero implements interfazTablero
     } 
     
 
-    protected function ponerFicha(int $x, int $y, Ficha $ficha){
+    public function ponerFicha(int $x, int $y, Ficha $ficha){
 
         if($x > $this->dimensionTableroX() || $y > $this->dimensionTableroY()){
             throw new Exception("ingrese valores de posicion dentro del rango del tablero");
@@ -61,25 +63,24 @@ class Tablero implements interfazTablero
         $this->tablero[$x][$y] = $ficha;
     }
 
-    public function ingresoUsuarioFicha(int $x,Ficha $ficha){
+    public function ponerFichaUsuario(int $x,Ficha $ficha){
 
-        if(hayFicha($x,0)){
+        if($this->hayFicha($x,0)){
             throw new Exception("La columna esta llena");
         }
         
-        for($y = dimensionTableroY(); $y > 0; $y--){
-            if(hayFicha($x,$y) != TRUE){
-                ponerFicha($x,$y,$ficha)
+        for($y = $this->dimensionTableroY() - 1; $y >= 0; $y--){
+            if($this->hayFicha($x,$y) != TRUE){
+                $this->ponerFicha($x,$y,$ficha);
 
-                //No se porq php no reconoce el break
-                break 0;
+                break;
             }
         }
 
     }
 
     //No se si hace falta una funcion para sacar fichas
-    protected function sacarFicha(int $x, int $y){
+    public function sacarFicha(int $x, int $y){
 
         if($x > $this->dimensionTableroX() || $y > $this->dimensionTableroY()){
             throw new Exception("ingrese valores de posicion dentro del rango del tablero");
@@ -90,21 +91,22 @@ class Tablero implements interfazTablero
 
     public function sacarFichaUsuario(int $x){
 
-        if(hayFicha($x,dimensionTableroY()) == FALSE){
+        if($this->hayFicha($x,$this->dimensionTableroY() - 1) == FALSE){
             throw new Exception("No hay fichas que sacar");
         }
 
-        for($y = 0; $y < dimensionTableroY(); $y++){
-            if(hayFicha($x,$y) == TRUE){
-                sacarFicha($x,$y)
-                //No se porq php no reconoce el break
-                break 0;
+        for($y = 0; $y < $this->dimensionTableroY(); $y++){
+            if($this->hayFicha($x,$y) == TRUE){
+                $this->sacarFicha($x,$y);
+                
+                break;
             }
         }
     }
+
     
     
-    protected function hayFicha(int $x, int $y){
+    public function hayFicha(int $x, int $y){
 
         if($x > $this->dimensionTableroX() || $y > $this->dimensionTableroY()){
             throw new Exception("ingrese valores de posicion dentro del rango del tablero");
@@ -131,4 +133,24 @@ class Tablero implements interfazTablero
             return $this->tablero[$x][$y]->queColorSoy();
         }
     }
+
+
+    public function mostrarTablero(){
+        for($y = 0; $y < $this->dimensionTableroY(); $y++){
+            
+            for($x = 0;$x < $this->dimensionTableroX(); $x++){
+
+                print($this->devolverValorCasilla($x,$y));
+
+            }
+            
+            print("\n");
+        }
+        print("\n\n");
+    }
+
+    
+
 }
+
+
