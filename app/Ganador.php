@@ -2,7 +2,6 @@
 
 namespace App;
 
-include 'Ficha.php';
 include 'Tablero.php';
 
 interface interfazGanador{
@@ -17,18 +16,24 @@ class Ganador implements interfazGanador{
     public function verificarGanador(Tablero $tablero, int $x, int $y){
 
 
-        if(ganadorEjeX($tablero,$x,$y) == TRUE || ganadorEjeY($tablero,$x,$y) == TRUE || ganadorDiagonal($tablero,$x,$y) == TRUE){
-            return $tablero->devolverValorCasilla($x,$y);
+        if($tablero->devolverValorCasilla($x,$y) != "0"){
+            if($this->ganadorEjeX($tablero,$x,$y) == TRUE || $this->ganadorEjeY($tablero,$x,$y) == TRUE || $this->ganadorDiagonal($tablero,$x,$y) == TRUE){
+                return $tablero->devolverValorCasilla($x,$y);
+            }
+            else{
+                return "nadie";
+            }
         }
-
         else{
             return "nadie";
         }
 
+        
+
     }
 
 
-    public function ganadorEjeX(Tablero $tablero, int $x, int $y){
+    protected function ganadorEjeX(Tablero $tablero, int $x, int $y){
 
         $ficha = $tablero->devolverValorCasilla($x, $y);
         $contador = 0;
@@ -36,21 +41,8 @@ class Ganador implements interfazGanador{
             if($ficha == $tablero->devolverValorCasilla($i, $y)){
                 $contador++;
             }
-        }
-        if($contador == 4){
-            return TRUE;
-        }
-        else{
-            return FALSE;
-        }
-    }
-
-    public function ganadorEjeY(Tablero $tablero, int $x, int $y){
-        $ficha = $tablero->devolverValorCasilla($x, $y);
-        $contador = 0;
-        for($i = 0; $i < $tablero->dimensionTableroY(); $i++){
-            if($ficha == $tablero->devolverValorCasilla($x, $i)){
-                $contador++;
+            else{
+                $contador = 0;
             }
         }
         if($contador == 4){
@@ -61,15 +53,34 @@ class Ganador implements interfazGanador{
         }
     }
 
-    public function ganadorDiagonal(Tablero $tablero, int $x, int $y){
+    protected function ganadorEjeY(Tablero $tablero, int $x, int $y){
+        $ficha = $tablero->devolverValorCasilla($x, $y);
+        $contador = 0;
+        for($i = 0; $i < $tablero->dimensionTableroY(); $i++){
+            if($ficha == $tablero->devolverValorCasilla($x, $i)){
+                $contador++;
+            }
+            else{
+                $contador = 0;
+            }
+        }
+        if($contador == 4){
+            return TRUE;
+        }
+        else{
+            return FALSE;
+        }
+    }
+
+    protected function ganadorDiagonal(Tablero $tablero, int $x, int $y){
         $ficha = $tablero->devolverValorCasilla($x, $y);
         $contador = 0;
         $ganador = FALSE;
 
-        for($posicionX = $x - 3,$posicionY = $y - 3; $posicionX != $x + 3 && $posicionY != $y  + 3; $posicionX++, $posicionY++){
+        for($posicionX = $x - 3,$posicionY = $y - 3; $posicionX != $x + 4 && $posicionY != $y  + 4; $posicionX++. $posicionY++){
 
-            if($posicionX <= $tablero->dimensionTableroX() && $posicionX >= 0 && $posicionY <= $tablero->dimensionTableroY() && $posicionY >= 0 ){
-                if($ficha == $tablero->devolverValorCasilla($x,$y)){
+            if($posicionX < $tablero->dimensionTableroX() && $posicionX >= 0 && $posicionY < $tablero->dimensionTableroY() && $posicionY >= 0 ){
+                if($ficha == $tablero->devolverValorCasilla($posicionX,$posicionY)){
                     $contador++;
                 }
                 else{
@@ -79,15 +90,18 @@ class Ganador implements interfazGanador{
         }
 
         if($contador >= 4){
+
             $ganador = TRUE;
 
             return $ganador;
         }
 
-        for($posicionX = $x + 3, $posicionY = $y - 3; $posicionX != $x - 3 && $posicionY != $y + 3; $posicionX--, $posicionY++){
+        
+
+        for($posicionX = $x + 3, $posicionY = $y - 3; $posicionX != $x - 4 && $posicionY != $y + 4; $posicionX--, $posicionY++){
 
             if($posicionX <= $tablero->dimensionTableroX() && $posicionX >= 0 && $posicionY <= $tablero->dimensionTableroY() && $posicionY >= 0 ){
-                if($ficha == $tablero->devolverValorCasilla($x,$y)){
+                if($ficha == $tablero->devolverValorCasilla($posicionX,$posicionY)){
                     $contador++;
                 }
                 else{

@@ -140,7 +140,7 @@ class Tablero implements interfazTablero
             
             for($x = 0;$x < $this->dimensionTableroX(); $x++){
 
-                print($this->devolverValorCasilla($x,$y));
+                printf("%8s",$this->devolverValorCasilla($x,$y));
 
             }
             
