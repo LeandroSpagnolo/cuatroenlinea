@@ -8,11 +8,6 @@ use Tests\TestCase;
 
 class TableConfirmationTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
     public function test_counting_white_squares()
     {
         $html = file_get_contents('https://cuatroenlinea.ddev.site/jugar/1');

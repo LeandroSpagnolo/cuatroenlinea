@@ -8,11 +8,6 @@ use Tests\TestCase;
 
 class circleConfirmationTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
     public function test_blue_circle_top()
     {
         $html = file_get_contents('https://cuatroenlinea.ddev.site/jugar/1');
