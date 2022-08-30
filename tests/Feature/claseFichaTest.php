@@ -1,6 +1,7 @@
 <?php
 
 namespace Tests\Feature;
+namespace App;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -8,15 +9,17 @@ use Tests\TestCase;
 
 class claseFichaTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function test_example()
+    public function test_crear_ficha_azul()
     {
-        $response = $this->get('/');
+        $fichaAzul = new Ficha("azul");
 
-        $response->assertStatus(200);
+        $this->assertTrue($fichaAzul->queColorSoy() == "azul");
+    }
+
+    public function test_crear_ficha_roja()
+    {
+        $fichaRoja = new Ficha("rojo");
+
+        $this->assertTrue($fichaRoja->queColorSoy() == "rojo");
     }
 }
