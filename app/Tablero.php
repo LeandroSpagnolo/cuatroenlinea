@@ -2,8 +2,6 @@
 
 namespace App;
 
-include 'Ficha.php';
-
 interface interfazTablero{
 
     public function dimensionTableroX() : int; // dimension del tablero en el eje X
