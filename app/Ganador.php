@@ -36,6 +36,9 @@ class Ganador implements interfazGanador{
         $ficha = $tablero->devolverValorCasilla($x, $y);
         $contador = 0;
         for($i = 0; $i < $tablero->dimensionTableroX(); $i++){
+            if($contador == 4){
+                return TRUE;
+            }
             if($ficha == $tablero->devolverValorCasilla($i, $y)){
                 $contador++;
             }
@@ -55,6 +58,9 @@ class Ganador implements interfazGanador{
         $ficha = $tablero->devolverValorCasilla($x, $y);
         $contador = 0;
         for($i = 0; $i < $tablero->dimensionTableroY(); $i++){
+            if($contador == 4){
+                return TRUE;
+            }
             if($ficha == $tablero->devolverValorCasilla($x, $i)){
                 $contador++;
             }
@@ -76,7 +82,9 @@ class Ganador implements interfazGanador{
         $ganador = FALSE;
 
         for($posicionX = $x - 3,$posicionY = $y - 3; $posicionX != $x + 4 && $posicionY != $y  + 4; $posicionX++. $posicionY++){
-
+            if($contador == 4){
+                return TRUE;
+            }
             if($posicionX < $tablero->dimensionTableroX() && $posicionX >= 0 && $posicionY < $tablero->dimensionTableroY() && $posicionY >= 0 ){
                 if($ficha == $tablero->devolverValorCasilla($posicionX,$posicionY)){
                     $contador++;
@@ -97,7 +105,9 @@ class Ganador implements interfazGanador{
         
 
         for($posicionX = $x + 3, $posicionY = $y - 3; $posicionX != $x - 4 && $posicionY != $y + 4; $posicionX--, $posicionY++){
-
+            if($contador == 4){
+                return TRUE;
+            }
             if($posicionX <= $tablero->dimensionTableroX() && $posicionX >= 0 && $posicionY <= $tablero->dimensionTableroY() && $posicionY >= 0 ){
                 if($ficha == $tablero->devolverValorCasilla($posicionX,$posicionY)){
                     $contador++;
