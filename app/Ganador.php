@@ -2,8 +2,6 @@
 
 namespace App;
 
-include 'Tablero.php';
-
 interface interfazGanador{
 
     public function verificarGanador(Tablero $tablero, int $x, int $y); //devuelve el color del jugador quien gano el juego en caso de ganar, si no devuelve "nadie"
